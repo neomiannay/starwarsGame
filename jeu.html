@@ -1,0 +1,235 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars</title>
+    <script src="d3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        @font-face {
+            font-family: starjedi;  
+            src: url("fonts/starwars.woff") format("woff"),
+            url("fonts/starwars.woff2") format("woff2");
+        }
+        body{
+            background-image: url(medias/fond.jpeg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        h1 {
+            font-family: starjedi;
+            text-align: center;
+            color: rgb(255, 255, 255);
+        }
+
+        h3{
+            font-family: starjedi;
+            color: rgb(255, 255, 255);
+            text-align: center;
+        }
+
+        #svg1{
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            transform: translateX(-50%);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #svg2{
+            z-index: 4;
+            position: absolute;
+            top: 100px;
+            right: 110px;
+        }
+
+        .flex{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sound {
+            z-index: 5;
+            background-image: url(medias/volume.png);
+            background-size: contain;
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            top: 30px;
+            left: 50px;
+        }
+
+        .pause{
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 500px;
+            width: 600px;
+            background-image: url(medias/pause.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .blur{
+            margin: 0px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 2;
+            height: 100vh;
+            width: 100vw;
+            backdrop-filter: blur(5px);
+        }
+
+        .wall{
+            z-index: 0;
+            transform: rotate(-90deg);
+            background-image: url(medias/wall.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 6%;
+            width: 40%;
+            position: absolute;
+            top: 60%;
+            left: 10%;
+        }
+
+        .loose{
+            z-index: 3;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -30%);
+            height: 400px;
+            width: 600px;
+            background-color: white;
+            border: 5px solid black;
+            border-radius: 20px;
+        }
+
+        .loosereload{
+            text-align: center;
+            font-size: 2em;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -30%);
+            text-decoration: none;
+            border: solid 2px red;
+            border-radius: 10px;
+            padding: 0px 10px 0px 10px;
+        }
+
+        .fin-score{
+            text-align: center;
+            width: 100%;
+        }
+
+        .nombre_de_vie{
+            position: absolute;
+            left: 80%;
+            top: 20%;
+    
+        }
+
+        .shop{
+            width: 160px;
+        }
+        .hide{
+            opacity: 0.5;
+        }
+        .lazerLvlUp p, .bomb p{
+            color: white;
+            text-align: center;
+            width: fit-content;
+            padding: 5px 5px 5px 5px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="" class="sound">
+        <audio loop>
+            <source src="medias/sound.mp3" type="audio/mp3">
+        </audio>
+    </a>
+
+    <h1>La Guerre des Étoiles</h1>
+    <h3>turn the sound up</h3>
+    <h3>made by Léo Ramdani & Néo Miannay</h3>
+    <p style="font-family: starjedi; color: white">Your best score is  
+        <span style="font-family: starjedi; color: rgb(255, 0, 0)" class="meilleurSCORE"></span>
+    </p>
+    <div class="blur">
+        <div class="pause">
+        </div>
+    </div>
+
+    <div class="loose">
+        <h1 class="loosetxt" style="font-family: starjedi; color: black">You lost</h1>
+        <a class="loosereload" href="jeu.html" style="font-family: starjedi; color: rgb(255, 0, 0)">retry</a>
+        <p class="fin-score" style="font-family: starjedi; color: black">you reach a score of <span class="fin-scoretxt"></span></p>
+    </div>
+
+    <p style="font-family: starjedi;color: white;" class="score"></p>
+    
+    <div class="shop flex" style="color: white; align-items: center; font-family: starjedi;">
+        <h1 style="color: red">MARKET</h1>
+        <div class="flex">
+            <p class="lazerLvl">700 points :</p>
+            <div class="lazerLvlUp">
+                <p class="hide"> press m </p>
+                <span style="text-align: center"></span>
+            </div>
+        </div>
+        <div class="flex">
+            <p>2000 points :</p>
+            <div class="bomb">
+                <p class="hide">press p</p>
+            </div>
+        </div>
+
+    </div>
+
+    <svg id="svg1" width="150vmin" height="70vmin" viewBox="0 0 150 70">
+        <defs>
+            <!-- zone de définitions: ici rien n'est dessiné, on défini les formes à utiliser plus tard-->
+            <g id="x-wing">
+                <image href="./medias/xwing.png" alt="" style="transform:rotate(270deg)" height="10">
+            </g>
+            <g id="tie_fighter">
+                <image href="./medias/dark.png" alt="" style="transform:rotate(90deg)" height="10">
+            </g>
+            <g id="greenlazer">
+                <image href="./medias/lazer_green.png" alt=""
+                height="10" width="10">
+            </g>
+            <g id="purpleennemi">
+                <image href="./medias/lazer_purple.png" alt=""
+                height="10" width="10">
+            </g>
+        </defs>
+        <g id="jeu"></g>
+        <image href="./medias/wall.png" style="transform:rotate(-90deg)" x="-70" y="30" width="70">
+    </svg>
+
+    <svg id="svg2" width="55vmin" height="10vmin" viewBox="0 0 55 10">
+        <image id="vie1" href="./medias/vie.png" alt=""
+            height="10" x="0" y="0"/>
+        <image id="vie2" href="./medias/vie.png" alt=""
+            height="10" x="15" y="0"/>
+        <image id="vie3" href="./medias/vie.png" alt=""
+            height="10" x="30" y="0"/>
+        <image id="vie4" href="./medias/vie.png" alt=""
+            height="10" x="45" y="0"/>
+    </svg>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

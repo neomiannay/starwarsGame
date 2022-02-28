@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Guerre des étoiles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url(medias/fond.jpeg) no-repeat;
+
+    }
+
+
+    @font-face {
+        font-family: starjedi;
+        src: url("fonts/starwars.woff") format("woff"),
+            url("fonts/starwars.woff2") format("woff2");
+    }
+
+    h1 {
+        text-align: center;
+        font-family: starjedi;
+        margin-top: 50px;
+        color: white;
+        font-size: 2.5em;
+    }
+
+
+    #xwing {
+        position: absolute;
+        left: 10%;
+        width: 350px;
+        top: 20%;
+    }
+
+    .xwing {
+        font-family: Starjedi;
+        color: white;
+        text-align: center;
+        width: 500px;
+        position: absolute;
+        top: 70%;
+        left: 5%;
+    }
+
+
+    #dark {
+        position: absolute;
+        left: 70%;
+        width: 350px;
+        top: 20%;
+    }
+
+    .chasseur {
+        font-family: Starjedi;
+        color: white;
+        text-align: center;
+        width: 500px;
+        position: absolute;
+        top: 70%;
+        left: 65%;
+    }
+
+
+    .start h1 {
+        font-family: starjedi;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #FFE600;
+        font-size: 5em;
+        vertical-align: middle;
+        padding-left: 2em;
+        padding-right: 2em;
+        transition: ease-in-out 400ms;
+    }
+
+    .start h1:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <h1>La guerre des etoiles</h1>
+
+
+    <img id="xwing" src="medias/xwing.png" class="img" alt="">
+    <div class="xwing">
+
+        <h2>x-wing</h2>
+        <p>Le x-wing, chasseur conçu par le constructeur Incom Corporation, était initialement destiné à l’Empire.
+            Cependant, l’intégralité des ingénieurs
+            ayant rejoint l’Alliance rebelle, ils y ont amené tous
+            les prototypes.
+        </p>
+    </div>
+
+
+    <img src="medias/dark.png" id="dark" alt="">
+    <div class="chasseur">
+
+        <h2>chasseur tie</h2>
+        <p>Ce chasseur était rapide et maniable,
+            Redoutable en combat rapproché, il fait partie en très grande majorité de la chasse impériale.
+            Son bruit caractéristique et son aspect menaçant en firent un engin très reconnaissable.
+        </p>
+    </div>
+
+    <div class="start">
+        <a href="jeu.html">
+            <h1>start</h1>
+        </a>
+    </div>
+
+
+</body>
+
+</html>
